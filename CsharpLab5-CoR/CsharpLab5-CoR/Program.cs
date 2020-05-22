@@ -93,7 +93,7 @@ namespace CsharpLab5_CoR
                     Console.WriteLine("File exists");
             }
             finally { if (sIn != null) sIn.Close(); }
-            Console.WriteLine("Recieved  " + mailbox.Length + "new emails\n");
+            Console.WriteLine("Recieved  " + mailbox.Length + "  new emails\n");
             if (mailbox != null)
             {
                 Console.WriteLine("\nMailbox is opened\n");
@@ -108,26 +108,39 @@ namespace CsharpLab5_CoR
                     }
                 }
             }
-            //создание цепочки обязанностей
-            //на основе пользовательских настроек фильтрации спама
-            //--IHandler[] handlersChain = null;
+            //создание цепочки обязанностей для тестирования
+            //создание обработчиков
             IHandler firstHandler = null;
+            IHandler AttachmentHandler = new AttachmentChecker();
+            IHandler LinksHandler = new LinksChecker();
+            IHandler TextAnalyzeHandler = new TextAnalyzer();
+                            // и др. возможные обработчики
+                            //обработчик отправителей
+                            //обработчик на основе пользовательских предпочтений (topics black list)
+
+            //цепочка проверок Attachment->Links->Text
+            AttachmentHandler.setNext(LinksHandler);
+            LinksHandler.setNext(TextAnalyzeHandler);
+            //устанавливаем 1ый обработчик
+            firstHandler = AttachmentHandler;
+
+            //создание цепочки обязанностей с учетом пользовательских настроек
             /*try
             {
-
-                //цикл
-                if (args[0].ToString().ToLower().StartsWith("a"))
+                Globals.settings = args;
+                for(int i = 0; i<args.Length;i++)
+                
+                if (args[i].ToString().ToLower().StartsWith("a"))
                 {
-                    //firstHandler
-                    firstHandler = new AttachmentChecker();
+                    AttachmentHandler = new AttachmentChecker();
                 }
-                else if (args[0].ToString().ToLower().StartsWith("l"))
+                else if (args[i].ToString().ToLower().StartsWith("l"))
                 {
-                    firstHandler = new LinksChecker();
+                    LinksHandler = new LinksChecker();
                 }
-                else if (args[0].ToString().ToLower().StartsWith("t"))
+                else if (args[i].ToString().ToLower().StartsWith("t"))
                 {
-                    firstHandler = new TextAnalyzer();
+                    TextAnalyzeHandler = new TextAnalyzer();
                 }
                 else
                     Console.WriteLine("Wrong handler name");
@@ -137,20 +150,18 @@ namespace CsharpLab5_CoR
                 Console.WriteLine("Fail to read settings from console");
                 //--handlersChain[0] = AttachmentHandler;
                 Globals.settings = new string[] { "attachments", "links", "text" };
+                AttachmentHandler = new AttachmentChecker();
+                LinksHandler = new LinksChecker();
+                TextAnalyzeHandler = new TextAnalyzer();
+            }
+            finally
+            {
+                if(AttachmentHandler != null)
+                    firstHandler = AttachmentHandler;
             }*/
-            
-            //для тестирования
-            AttachmentChecker AttachmentHandler = new AttachmentChecker();
-            LinksChecker LinksHandler = new LinksChecker();
-            TextAnalyzer TextAnalyzeHandler = new TextAnalyzer();
-            //цепочка проверок Attachment->Links->Text
-            AttachmentHandler.setNext(LinksHandler);
-            LinksHandler.setNext(TextAnalyzeHandler);
-            //устанавливаем 1ый обработсик
-            firstHandler = AttachmentHandler;
-            firstHandler.setNext(LinksHandler);
 
 
+            //ПРОВЕРКА СПАМА
             if (mailbox != null)
             {
                 foreach (Email eml in mailbox)
