@@ -48,11 +48,10 @@ namespace CsharpLab5_CoR
                 int i = -1;
                 while ((i < n) && (!sIn.EndOfStream))
                 {
-                    Console.WriteLine("while");
                     srcStart = sIn.ReadLine();
                     if (srcStart == "email")
                     {
-                        Console.WriteLine("New email recieved");
+                        Console.WriteLine("New email recieved\n");
                         i++;
                         srcMessage = "";
                         srcSender = "";
@@ -61,7 +60,6 @@ namespace CsharpLab5_CoR
                         if (srcStart == "sender")
                         {
                             srcSender = sIn.ReadLine();
-                            Console.WriteLine(srcSender);
                         }
                         srcStart = sIn.ReadLine();
                         if (srcStart == "message")
@@ -95,10 +93,10 @@ namespace CsharpLab5_CoR
                     Console.WriteLine("File exists");
             }
             finally { if (sIn != null) sIn.Close(); }
-            //Console.WriteLine(mailbox.Length);
+            Console.WriteLine("Recieved  " + mailbox.Length + "new emails\n");
             if (mailbox != null)
             {
-                Console.WriteLine("\nMailbox is opened");
+                Console.WriteLine("\nMailbox is opened\n");
 
                 foreach (Email src in mailbox)
                 {
@@ -113,7 +111,7 @@ namespace CsharpLab5_CoR
             //создание цепочки обязанностей
             //на основе пользовательских настроек фильтрации спама
             //--IHandler[] handlersChain = null;
-            AttachmentChecker firstHandler = null;
+            IHandler firstHandler = null;
             /*try
             {
 
@@ -136,11 +134,11 @@ namespace CsharpLab5_CoR
             }
             catch
             {
-
+                Console.WriteLine("Fail to read settings from console");
                 //--handlersChain[0] = AttachmentHandler;
                 Globals.settings = new string[] { "attachments", "links", "text" };
             }*/
-            Console.WriteLine("Fail to read settings from console");
+            
             //для тестирования
             AttachmentChecker AttachmentHandler = new AttachmentChecker();
             LinksChecker LinksHandler = new LinksChecker();
@@ -148,8 +146,8 @@ namespace CsharpLab5_CoR
             //цепочка проверок Attachment->Links->Text
             AttachmentHandler.setNext(LinksHandler);
             LinksHandler.setNext(TextAnalyzeHandler);
-            //ORRRRR
-            firstHandler = new AttachmentChecker();
+            //устанавливаем 1ый обработсик
+            firstHandler = AttachmentHandler;
             firstHandler.setNext(LinksHandler);
 
 

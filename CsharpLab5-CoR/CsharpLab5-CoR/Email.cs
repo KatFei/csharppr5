@@ -12,8 +12,7 @@ namespace CsharpLab5_CoR
         private readonly string _message;
         private readonly string _sender;
         private readonly object _attachment;
-        private bool spamChecked = false;
-        private bool isspam = false;
+
 
         /// <summary>
         /// Constructor of class <c>Email</c>, creates new email letter.

@@ -48,7 +48,7 @@ namespace CsharpLab5_CoR
             //Console.WriteLine("spamScore " + spamScore);//
             if (spamScore > Globals.trustLimit)
             {
-                Console.WriteLine("Email moved to spam");
+                Console.WriteLine("Email moved to SPAM");
                 spamScore = 0;
             }
             else
@@ -75,13 +75,17 @@ namespace CsharpLab5_CoR
         /// <param name="email">email to check</param>
         public override void Handle(Email email)
         {
-            Console.WriteLine("AttachmentChecker started");
+            Console.WriteLine("AttachmentChecker : execution started");
             //
             if ((email.Attachment != null) && (CheckAttachment(email.Attachment)))
-            { spamScore += Globals.trustLimit+0.01;}    
-            Console.WriteLine("handled");
-            Console.WriteLine("spamScore " + spamScore);
-            base.Handle(email);
+            {
+                Console.WriteLine("Email moved to JUNK");//spamScore += Globals.trustLimit+0.01;
+            }   
+            else      
+                base.Handle(email);      
+            //Console.WriteLine("handled");
+            //Console.WriteLine("spamScore " + spamScore);
+            
         }
         private bool CheckAttachment(object a) {
             if (a.ToString().Contains("virus")) 
@@ -101,13 +105,11 @@ namespace CsharpLab5_CoR
         /// <param name="email">email to check</param>
         public override void Handle(Email email)
         {
-            Console.WriteLine("LinksChecker started");
-            ParseLinks(email.Message);
+            Console.WriteLine("LinksChecker : execution started");
             if (email.Message.Contains("ref")) 
-                if (ParseLinks(email.Message))
-                    spamScore += .5;
-            Console.WriteLine("handled");
-            Console.WriteLine("spamScore " + spamScore);//
+                    spamScore += ParseLinks(email.Message) *.75;
+            //Console.WriteLine("handled");
+            //Console.WriteLine("spamScore " + spamScore);//
             base.Handle(email);
         }
 
@@ -120,10 +122,9 @@ namespace CsharpLab5_CoR
             }
             return false;
         }
-        private bool ParseLinks(string mystring)
+        private int ParseLinks(string mystring)
         {
-            //mystring = "My text and url http://www.google.com The end.";
-            //string[] links;
+            int count=0;
 
             Regex urlRx = new Regex(@"(?<url>((http|https|ftp):[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*)", RegexOptions.IgnoreCase);
 
@@ -134,9 +135,9 @@ namespace CsharpLab5_CoR
                 var url = match.Groups["url"].Value;
                 Console.WriteLine(match.ToString()); //mystring = mystring.Replace(url, string.Format("<a href=\"{0}\">{0}</a>", url));
                 if (CheckLink(match.ToString()))
-                    return true;
+                    count++;
             }
-            return false;
+            return count;
         }
     }
     /// <summary>
@@ -150,11 +151,11 @@ namespace CsharpLab5_CoR
         /// <param name="email">email to check</param>
         public override void Handle(Email email)
         {
-            Console.WriteLine("TextAnalyzer started");
+            Console.WriteLine("TextAnalyzer : execution started");
             if (email.Message.Contains("viagra"))
                 spamScore += .25;
-            Console.WriteLine("handled");
-            Console.WriteLine("spamScore " + spamScore);//
+            //Console.WriteLine("handled");
+            //Console.WriteLine("spamScore " + spamScore);//
             base.Handle(email);
         }
     }
