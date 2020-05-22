@@ -69,8 +69,6 @@ namespace CsharpLab5_CoR
     /// </summary>
     class AttachmentChecker : BaseHandler
     {
-        //  if no attachment go to next Handler
-	    //  if virus move to Spam
         /// <summary>
         /// Method <c>Handle</c> checks if there is an attachment and if it contains suspicious files moves email to junk.
         /// </summary>
@@ -96,9 +94,7 @@ namespace CsharpLab5_CoR
     /// </summary>
     class LinksChecker : BaseHandler
     {
-        //	if virus link move to Spam
         private MatchCollection links = null;
-	    //  if ad link +=score
         /// <summary>
         /// Method <c>Handle</c> checks if email contains links and if links refer to suspicious sites increase spam score
         /// </summary>
@@ -115,7 +111,7 @@ namespace CsharpLab5_CoR
             base.Handle(email);
         }
 
-        private bool CheckLink(string url) //Links(parse text) or Link(web)?
+        private bool CheckLink(string url)
         {
             foreach(string site in Globals.suspicWebSites)
             {
@@ -142,22 +138,6 @@ namespace CsharpLab5_CoR
             }
             return false;
         }
-        /*private void ParseLinks(string mystring)
-        {
-            //mystring = "My text and url http://www.google.com The end.";
-            //string[] links;
-
-            Regex urlRx = new Regex(@"(?<url>((http|https|ftp):[/][/]|www.)([a-z]|[A-Z]|[0-9]|[/.]|[~])*)", RegexOptions.IgnoreCase);
-
-            links = urlRx.Matches(mystring);
-
-            foreach (Match match in links)
-            {
-                var url = match.Groups["url"].Value;
-                //mystring = mystring.Replace(url, string.Format("<a href=\"{0}\">{0}</a>", url));
-                Console.WriteLine(match.ToString());
-            }
-        }*/
     }
     /// <summary>
     /// Class <c>TextAnalyzer</c> provides methods to checks incoming email for spam words.
@@ -178,18 +158,4 @@ namespace CsharpLab5_CoR
             base.Handle(email);
         }
     }
-    /*
-    public class PerspcriptionDrugFilter : IFilter<string, double>
-    {
-        public double Execute(string text, Func<string, double> executeNext)
-        {
-            var score = executeNext(text);
-
-            if (text.Contains("viagra"))
-                score += .25;
-
-            return score;
-        }
-    }
-    */
     }

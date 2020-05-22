@@ -90,10 +90,9 @@ namespace CsharpLab5_CoR
             catch {
                 Console.WriteLine("\nRead from file failed: \n" + path);
                 if (!File.Exists(path+ "/Input.txt"))
-                    Console.WriteLine("File does not exist");//throw new ArgumentNullException("File does not exist", e);
+                    Console.WriteLine("File does not exist");
                 else
                     Console.WriteLine("File exists");
-                //throw new ArgumentException("Some Read Exception", e);
             }
             finally { if (sIn != null) sIn.Close(); }
             //Console.WriteLine(mailbox.Length);

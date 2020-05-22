@@ -11,8 +11,7 @@ namespace CsharpLab5_CoR
     {
         private readonly string _message;
         private readonly string _sender;
-        private readonly object _attachment;//readonly? или можно удалять если вирус?
-        //private double spamScore = 0;
+        private readonly object _attachment;
         private bool spamChecked = false;
         private bool isspam = false;
 
@@ -27,8 +26,6 @@ namespace CsharpLab5_CoR
             _message = m;
             _sender = s;
             _attachment = a;
-            //get links (parsing)
-            //create array of links
         }
         /// <summary>
         /// Property <c>Message</c> represents text message
@@ -45,24 +42,6 @@ namespace CsharpLab5_CoR
         /// </summary>
         /// <value>Gets value of _attachment of type object</value>
         public object Attachment { get => _attachment;}
-
-        /*
-        //public bool Isspam { get => isspam; set => isspam = value; }
-
-        public void isSpam(double spamScore)
-        {
-            //устанавливаем isspam 1 раз
-            if (!spamChecked) if (spamScore > 1)
-                {
-                    spamChecked = true;
-                    isspam = true;
-                }
-        }
-        public bool isSpam()
-        {
-            return isspam;
-        }
-        */
         /// <summary>
         /// Method <c>GetEmailInfo</c> prints email information (for testing).
         /// </summary>
