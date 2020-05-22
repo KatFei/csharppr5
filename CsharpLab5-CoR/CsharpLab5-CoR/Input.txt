@@ -1,0 +1,57 @@
+5
+
+email
+sender
+ozon
+message
+	dfghjklldfhdfghjklldfhdfghjklldfhdfghjklldfhdfghjklldfhdfg
+<ref =virus> hjklldfh
+/end
+--attachment
+refs
+
+email
+sender
+amazon
+message
+	dfghjklldfhdfghjklldfhdfghjklldfhdfghjklldfhdfghjklldfhdfghjklldfh
+<ref =ad>
+/end
+attachment
+virus
+
+refs
+
+email
+sender
+shopXXX
+message
+	dfghjklldfhdfghjklldfhdf<ref =ad>ghjklldfv http://stackoverflow.com/ iagr
+	https://stackoverflow.com/ ahdfghjklldfhdfghjklldfhdfghjklldfh
+/end
+--attachment
+
+refs
+
+email
+sender
+ozon
+message
+	dfghjklldfhdfghjk https://horux.cz/ lldfhdfghjkll<ref =ok>dfhdfghjkhlldfhdfghjklldfhdfghjklldfh
+/end
+--attachment
+
+refs
+
+email
+sender
+zoom
+message
+	dfghjklldfhdfghjklldfhdfghjkl<a href="http://www.google.com">ldfhdfghjklldfhdfghjklldfhdfghjklldfh
+/end
+attachment
+file
+
+refs
+
+
