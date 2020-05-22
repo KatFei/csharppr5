@@ -110,55 +110,16 @@ namespace CsharpLab5_CoR
             }
             //создание цепочки обязанностей для тестирования
             //создание обработчиков
-            IHandler firstHandler = null;
-            IHandler AttachmentHandler = new AttachmentChecker();
+            IHandler firstHandler = new AttachmentChecker();
             IHandler LinksHandler = new LinksChecker();
             IHandler TextAnalyzeHandler = new TextAnalyzer();
-                            // и др. возможные обработчики
-                            //обработчик отправителей
-                            //обработчик на основе пользовательских предпочтений (topics black list)
+                        // и др. возможные обработчики
+                        //обработчик отправителей
+                        //обработчик на основе пользовательских предпочтений (topics black list)
 
             //цепочка проверок Attachment->Links->Text
-            AttachmentHandler.setNext(LinksHandler);
+            firstHandler.setNext(LinksHandler);
             LinksHandler.setNext(TextAnalyzeHandler);
-            //устанавливаем 1ый обработчик
-            firstHandler = AttachmentHandler;
-
-            //создание цепочки обязанностей с учетом пользовательских настроек
-            /*try
-            {
-                Globals.settings = args;
-                for(int i = 0; i<args.Length;i++)
-                
-                if (args[i].ToString().ToLower().StartsWith("a"))
-                {
-                    AttachmentHandler = new AttachmentChecker();
-                }
-                else if (args[i].ToString().ToLower().StartsWith("l"))
-                {
-                    LinksHandler = new LinksChecker();
-                }
-                else if (args[i].ToString().ToLower().StartsWith("t"))
-                {
-                    TextAnalyzeHandler = new TextAnalyzer();
-                }
-                else
-                    Console.WriteLine("Wrong handler name");
-            }
-            catch
-            {
-                Console.WriteLine("Fail to read settings from console");
-                //--handlersChain[0] = AttachmentHandler;
-                Globals.settings = new string[] { "attachments", "links", "text" };
-                AttachmentHandler = new AttachmentChecker();
-                LinksHandler = new LinksChecker();
-                TextAnalyzeHandler = new TextAnalyzer();
-            }
-            finally
-            {
-                if(AttachmentHandler != null)
-                    firstHandler = AttachmentHandler;
-            }*/
 
 
             //ПРОВЕРКА СПАМА
